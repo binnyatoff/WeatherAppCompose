@@ -10,30 +10,41 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.binnyatoff.weatherappcompose.ui.theme.WeatherAppComposeTheme
 
-
 @Composable
 fun Home() {
-    Box(
-        modifier = Modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
+}
+
+
+@Composable
+fun HomeLoaded(
+ state: HomeState.Loaded
+) {
+    with(state){
+        Box(
             modifier = Modifier,
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentAlignment = Alignment.Center
         ) {
-            Text(text = "Location")
-            Text(text = "Temperature ⁰С", fontSize = 70.sp)
-            Row(modifier = Modifier) {
-                Column() {
-                    Text(text = "Humidity")
-                }
-                Spacer(modifier = Modifier.width(60.dp))
-                Column() {
-                    Text(text = "Wind")
+            Column(
+                modifier = Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = location)
+                Text(text = "$temp⁰С", fontSize = 70.sp)
+                Row(modifier = Modifier) {
+                    Column() {
+                        Text(text = "Humidity")
+                        Text(text = "$humidity")
+                    }
+                    Spacer(modifier = Modifier.width(60.dp))
+                    Column() {
+                        Text(text = "Wind")
+                        Text(text = "$wind")
+                    }
                 }
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)

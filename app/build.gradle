@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -21,6 +23,9 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField("String", "API_KEY", "\"a1b1d9d873a369c867978a5b0d661a5d\"")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -50,11 +55,25 @@ dependencies {
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
+    //Navigation
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-compose:$nav_version"
     
     //Accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.18.0"
+
+    //Hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    //HttpLoggingInterceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
