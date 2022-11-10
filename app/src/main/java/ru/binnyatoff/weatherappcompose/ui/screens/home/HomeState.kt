@@ -1,6 +1,7 @@
 package ru.binnyatoff.weatherappcompose.ui.screens.home
 
-sealed class HomeState {
+
+open class HomeState {
     object Loading:HomeState()
 
     data class Loaded(
@@ -9,10 +10,10 @@ sealed class HomeState {
         val humidity: Int,
         val wind: Double,
         val location: String,
-        val currentTime: String
-    ):HomeState()
+        val currentTime: Int
+    ) : HomeState()
 
     object Empty : HomeState()
-
     data class Error(val error: String) : HomeState()
+
 }
