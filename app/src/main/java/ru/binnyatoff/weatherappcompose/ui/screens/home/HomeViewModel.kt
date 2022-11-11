@@ -7,44 +7,59 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.binnyatoff.weatherappcompose.GPS
 import ru.binnyatoff.weatherappcompose.data.Repository
+import ru.binnyatoff.weatherappcompose.data.models.Coordinates
+import ru.binnyatoff.weatherappcompose.data.toCurrentWeather
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    private val _viewState = MutableLiveData<HomeState>(HomeState.Loading)
+class HomeViewModel @Inject constructor(private val repository: Repository, private val gps: GPS) :
+    ViewModel() {
+    private val _viewState = MutableLiveData<HomeState>(HomeState.ValidatePermissions)
     val viewState: LiveData<HomeState> = _viewState
 
-    init {
-        getCurrentWeather()
+    fun obtainEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.GpsPermissionGranted -> {
+                getLocate()
+                _viewState.postValue(HomeState.Loading)
+            }
+        }
     }
 
-    private fun getCurrentWeather() {
+    private fun getLocate() {
+        gps.getLocate()
+        viewModelScope.launch {
+            val gpsLocation = gps.location
+            gpsLocation.collect { coordinates ->
+                if (coordinates != null)
+                getCurrentWeather(coordinates)
+            }
+        }
+    }
+
+    private fun getCurrentWeather(coordinates: Coordinates) {
         viewModelScope.launch {
             try {
-                val response = repository.getCurrentWeather()
+                val response = repository.getCurrentWeather(coordinates)
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
-                        with(body) {
-                            _viewState.postValue(
-                                HomeState.Loaded(
-                                    icon = weather[0].icon,
-                                    temp = main.temp,
-                                    humidity = main.humidity,
-                                    wind = wind.speed,
-                                    location = name,
-                                    currentTime = timezone
-                                )
+                        _viewState.postValue(
+                            HomeState.Loaded(
+                                body.toCurrentWeather()
                             )
-
-                        }
+                        )
+                    } else {
+                        _viewState.postValue(
+                            HomeState.Empty
+                        )
+                        Log.e(TAG, response.toString())
                     }
-                    Log.e(TAG, response.toString())
-
-
                 }
             } catch (e: Exception) {
+                _viewState.postValue(HomeState.Error(e.toString()))
                 Log.e(TAG, e.toString())
             }
         }

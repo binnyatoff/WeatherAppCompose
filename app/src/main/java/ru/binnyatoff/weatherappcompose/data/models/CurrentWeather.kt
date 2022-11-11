@@ -1,20 +1,10 @@
 package ru.binnyatoff.weatherappcompose.data.models
 
-import ru.binnyatoff.WeatherApp.data.network.modelsDay.Coord
-
-
 data class CurrentWeather(
-    val base: String,
-    val clouds: Clouds,
-    val cod: Int,
-    val coord: Coord,
-    val dt: Int,
-    val id: Int,
-    val main: Main,
-    val name: String,
-    val sys: Sys,
-    val timezone: Int,
-    val visibility: Int,
-    val weather: List<Weather>,
-    val wind: Wind
+    val icon: String,
+    val temp: Double,
+    val humidity: Int,
+    val windSpeed: Double,
+    val location: String,
+    val currentTime: Int
 )
