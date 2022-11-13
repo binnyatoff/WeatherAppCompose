@@ -1,79 +1,73 @@
 package ru.binnyatoff.weatherappcompose.ui.screens.daily
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import ru.binnyatoff.weatherappcompose.R
-import ru.binnyatoff.weatherappcompose.ui.theme.WeatherAppComposeTheme
-import java.time.LocalDate
-import java.util.*
-
-data class Daily(
-    val date: LocalDate,
-    val temp: String,
-    val icon: String
-)
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import ru.binnyatoff.weatherappcompose.data.DailyMap
+import ru.binnyatoff.weatherappcompose.ui.screens.components.DailyWeatherCard
+import ru.binnyatoff.weatherappcompose.ui.theme.AppTheme
 
 @Composable
 fun Daily(viewModel: DailyViewModel) {
     val viewState = viewModel.viewState.observeAsState()
     when (val state = viewState.value) {
-        is DailyState.Loaded -> DailyLoaded(state = state)
+        is DailyState.Loading -> DailyLoading()
+        is DailyState.Loaded -> DailyLoaded(list = state.listDaily)
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalGlideComposeApi::class)
 @Composable
-fun DailyLoaded(state: DailyState.Loaded) {
-    val list = state.weathers
+fun DailyLoading() {
+    Text(text = "Loading")
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun DailyLoaded(list: List<DailyMap>) {
     LazyColumn() {
         stickyHeader {
-            Text(text = "Daily Weather")
-        }
-        items(list) { day ->
-            Card(){
-                Row() {
-                    Text(text = day.date.toString())
-                    Text(text = day.temp)
-                    GlideImage(
-                        model = day.icon,
-                        contentDescription = stringResource(id = R.string.weatherIcon)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(AppTheme.colors.primary),
+                contentAlignment = Alignment.Center
+            ) {
+                Card(
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .padding(top = 15.dp, bottom = 15.dp)
+                        .align(Alignment.Center),
+                    backgroundColor = AppTheme.colors.secondary
+                ) {
+                    Text(
+                        modifier = Modifier.padding(12.dp),
+                        text = "Daily Weather",
+                        fontSize = 35.sp
                     )
                 }
             }
-
+        }
+        items(list) { day ->
+            Text(text = "Day ${day.dt}", Modifier.padding(start = 20.dp))
+            DailyWeatherCard(
+                humidity = day.humidity,
+                pressure = day.pressure,
+                temp = day.temp,
+                icon = day.icon
+            )
         }
     }
-}
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true)
-@Composable
-fun DailyLoadedPreview() {
-    WeatherAppComposeTheme {
-        val day: Daily = Daily(
-            date = LocalDate.parse(
-                "2018-12-12"
-            ),
-            temp = "12",
-            icon = "Not Found"
-        )
-        val list: List<Daily> = listOf(day)
-        DailyLoaded(
-            state = DailyState.Loaded(
-                list
-            )
-        )
-    }
 }

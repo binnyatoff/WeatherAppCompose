@@ -5,11 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ru.binnyatoff.weatherappcompose.R
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import ru.binnyatoff.weatherappcompose.ui.BottomViewItem
 import ru.binnyatoff.weatherappcompose.ui.theme.AppTheme
 
 enum class NavigationTree {
@@ -21,21 +19,21 @@ sealed class BottomNavigationItems(var title: Int, var screen_route: String, var
         BottomNavigationItems(
             R.string.home,
             NavigationTree.Home.name,
-            R.drawable.ic_baseline_home_24
+            R.drawable.ic_home
         )
 
     object Daily :
         BottomNavigationItems(
             R.string.daily,
             NavigationTree.Daily.name,
-            R.drawable.ic_baseline_daily_24
+            R.drawable.ic_daily
         )
 
     object Search :
         BottomNavigationItems(
             R.string.search,
             NavigationTree.Search.name,
-            R.drawable.ic_baseline_search_24
+            R.drawable.ic_search
         )
 
 }
@@ -49,55 +47,62 @@ fun BottomNavigation(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        BottomNavigationItem(modifier = Modifier,
-            selectedContentColor = Color.Black,
-            unselectedContentColor = Color.Gray,
-            selected = currentRoute == BottomNavigationItems.Home.screen_route,
-            label = { Text(text = stringResource(id = BottomNavigationItems.Home.title)) },
+        BottomViewItem(
+            modifier = Modifier,
+            label = BottomNavigationItems.Home.title,
+            onClick = {
+                navController.navigate(NavigationTree.Home.name) {
+                    navController.graph.startDestinationRoute?.let { screen_route ->
+                        popUpTo(screen_route) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
+            icon = BottomNavigationItems.Home.icon,
+            iconTitle = BottomNavigationItems.Home.title,
+            selected = currentRoute == BottomNavigationItems.Home.screen_route
+        )
 
-            onClick = { navController.navigate(NavigationTree.Home.name) },
-
-            icon = {
-                Icon(
-                    painter = painterResource(id = BottomNavigationItems.Home.icon),
-                    contentDescription = stringResource(
-                        id = BottomNavigationItems.Home.title
-                    )
-                )
-            })
-
-        BottomNavigationItem(modifier = Modifier,
-            selectedContentColor = Color.Black,
-            unselectedContentColor = Color.Gray,
-            selected = currentRoute == BottomNavigationItems.Daily.screen_route,
-            label = { Text(text = stringResource(id = BottomNavigationItems.Daily.title)) },
-
-            onClick = { navController.navigate(NavigationTree.Daily.name) },
-
-            icon = {
-                Icon(
-                    painter = painterResource(id = BottomNavigationItems.Daily.icon),
-                    contentDescription = stringResource(
-                        id = BottomNavigationItems.Daily.title
-                    )
-                )
-            })
-
-        BottomNavigationItem(modifier = Modifier,
-            selectedContentColor = Color.Black,
-            unselectedContentColor = Color.Gray,
-            selected = currentRoute == BottomNavigationItems.Search.screen_route,
-            label = { Text(text = stringResource(id = BottomNavigationItems.Search.title)) },
-
-            onClick = { navController.navigate(NavigationTree.Search.name) },
-
-            icon = {
-                Icon(
-                    painter = painterResource(id = BottomNavigationItems.Search.icon),
-                    contentDescription = stringResource(
-                        id = BottomNavigationItems.Search.title
-                    )
-                )
-            })
+        BottomViewItem(
+            modifier = Modifier,
+            label = BottomNavigationItems.Daily.title,
+            onClick = {
+                navController.navigate(NavigationTree.Daily.name) {
+                    navController.graph.startDestinationRoute?.let { screen_route ->
+                        popUpTo(screen_route) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
+            icon = BottomNavigationItems.Daily.icon,
+            iconTitle = BottomNavigationItems.Daily.title,
+            selected = currentRoute == BottomNavigationItems.Daily.screen_route
+        )
+        BottomViewItem(
+            modifier = Modifier,
+            label = BottomNavigationItems.Search.title,
+            onClick = {
+                navController.navigate(NavigationTree.Search.name)
+                {
+                    navController.graph.startDestinationRoute?.let { screen_route ->
+                        popUpTo(screen_route) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
+            icon = BottomNavigationItems.Search.icon,
+            iconTitle = BottomNavigationItems.Search.title,
+            selected = currentRoute == BottomNavigationItems.Search.screen_route
+        )
     }
 }
+

@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import ru.binnyatoff.weatherappcompose.data.models.Coordinates
 import javax.inject.Inject
 
-class GPS @Inject constructor(@ApplicationContext private var appContext: Context) {
+class GPS (private var appContext: Context) {
 
     private val locationManager =
         appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -26,8 +26,8 @@ class GPS @Inject constructor(@ApplicationContext private var appContext: Contex
     private val hasGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     private val hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-    private val _location = MutableStateFlow<Coordinates?>(null)
-    val location: Flow<Coordinates?> = _location
+    private val _location = MutableSharedFlow<Coordinates>(replay = 2, extraBufferCapacity = 2, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val location: SharedFlow<Coordinates> = _location.asSharedFlow()
 
     fun getLocate() {
         if (ActivityCompat.checkSelfPermission(

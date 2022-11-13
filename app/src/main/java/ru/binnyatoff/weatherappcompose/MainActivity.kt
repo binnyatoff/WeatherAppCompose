@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -41,7 +40,7 @@ fun MainScreenView() {
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = AppTheme.colors.primary,
         bottomBar = {
             BottomNavigation(navController = navController)
         }

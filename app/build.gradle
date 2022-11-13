@@ -67,6 +67,8 @@ dependencies {
     def accompanist = "0.18.0"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist"
     implementation "com.google.accompanist:accompanist-permissions:$accompanist"
+    implementation "com.google.accompanist:accompanist-placeholder-material:$accompanist"
+
 
 
     //Hilt

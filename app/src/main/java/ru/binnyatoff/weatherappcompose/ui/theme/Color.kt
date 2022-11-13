@@ -6,5 +6,5 @@ val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
-val Tulip = Color(0xFFFFADA7)
-val Melon = Color(0xFFFFA7CD)
+val Tulip = Color(0xFFADA7E2)//
+val Melon = Color(0xFF8782B0)//background
