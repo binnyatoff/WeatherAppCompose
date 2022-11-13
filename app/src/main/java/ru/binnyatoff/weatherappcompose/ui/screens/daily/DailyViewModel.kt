@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.binnyatoff.weatherappcompose.GPS
+import ru.binnyatoff.weatherappcompose.data.GPS
 import ru.binnyatoff.weatherappcompose.data.Repository
 import ru.binnyatoff.weatherappcompose.data.models.Coordinates
 import ru.binnyatoff.weatherappcompose.data.toDailyMap
@@ -46,14 +46,12 @@ class DailyViewModel @Inject constructor(private val gps: GPS, private val repos
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
-                        delay(1000)
                         _viewState.postValue(
                             DailyState.Loaded(
                                 body.toDailyMap()
 
                             )
                         )
-                        Log.e(HomeViewModel.TAG, response.toString())
                     } else {
                         _viewState.postValue(
                             DailyState.Empty

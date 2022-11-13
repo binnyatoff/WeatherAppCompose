@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.binnyatoff.weatherappcompose.GPS
+import ru.binnyatoff.weatherappcompose.data.GPS
 import ru.binnyatoff.weatherappcompose.data.network.Api
 import ru.binnyatoff.weatherappcompose.data.Repository
 import javax.inject.Singleton
@@ -23,7 +23,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGPS(@ApplicationContext appContext: Context):GPS{
+    fun provideGPS(@ApplicationContext appContext: Context): GPS {
         return GPS(appContext = appContext)
     }
 }

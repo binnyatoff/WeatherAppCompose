@@ -1,4 +1,4 @@
-package ru.binnyatoff.weatherappcompose
+package ru.binnyatoff.weatherappcompose.data
 
 import android.Manifest
 import android.annotation.SuppressLint
