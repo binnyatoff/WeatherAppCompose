@@ -1,4 +1,4 @@
-package ru.binnyatoff.weatherappcompose.ui
+package ru.binnyatoff.weatherappcompose.ui.screens.components
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.RoundedCornerShape

@@ -8,8 +8,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.binnyatoff.weatherappcompose.BuildConfig
-import ru.binnyatoff.weatherappcompose.data.Api
-import ru.binnyatoff.weatherappcompose.data.AppInterceptor
+import ru.binnyatoff.weatherappcompose.data.network.Api
+import ru.binnyatoff.weatherappcompose.data.network.AppInterceptor
 import javax.inject.Singleton
 
 @Module

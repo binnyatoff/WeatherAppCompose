@@ -3,8 +3,8 @@ package ru.binnyatoff.weatherappcompose.data
 import retrofit2.Response
 import ru.binnyatoff.weatherappcompose.data.models.Coordinates
 import ru.binnyatoff.weatherappcompose.data.modelsDTO.CurrentWeatherDTO
-import ru.binnyatoff.weatherappcompose.data.modelsDTO.Daily
 import ru.binnyatoff.weatherappcompose.data.modelsDTO.DailyWeatherDTO
+import ru.binnyatoff.weatherappcompose.data.network.Api
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val api: Api) {

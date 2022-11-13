@@ -22,10 +22,6 @@ class DailyViewModel @Inject constructor(private val gps: GPS, private val repos
     private val _viewState = MutableLiveData<DailyState>(DailyState.Loading)
     val viewState: LiveData<DailyState> = _viewState
 
-    init {
-        getCoordinates()
-    }
-
     fun obtainEvent(event: DailyEvent) {
         when (event) {
             is DailyEvent.ScreenInit -> getCoordinates()
@@ -50,6 +46,7 @@ class DailyViewModel @Inject constructor(private val gps: GPS, private val repos
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
+                        delay(1000)
                         _viewState.postValue(
                             DailyState.Loaded(
                                 body.toDailyMap()

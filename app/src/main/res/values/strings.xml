@@ -4,4 +4,12 @@
     <string name="daily">Daily</string>
     <string name="search">Search</string>
     <string name="weatherIcon">WeatherIcon</string>
+    <string name="currentWeather">Current Weather</string>
+    <string name="dailyWeather">Daily Weather</string>
+    <string name="viewStateEmpty">ViewState is empty -_-</string>
+    <string name="requestPermission">Request permission</string>
+    <string name="viewEmpty">Empty</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="pressure">Pressure</string>
 </resources>

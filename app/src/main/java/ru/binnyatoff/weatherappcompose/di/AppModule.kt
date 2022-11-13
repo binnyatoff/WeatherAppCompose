@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.binnyatoff.weatherappcompose.GPS
-import ru.binnyatoff.weatherappcompose.data.Api
+import ru.binnyatoff.weatherappcompose.data.network.Api
 import ru.binnyatoff.weatherappcompose.data.Repository
 import javax.inject.Singleton
 

@@ -27,7 +27,6 @@ class HomeViewModel @Inject constructor(private val repository: Repository, priv
         when (event) {
             is HomeEvent.GpsPermissionGranted -> {
                 getLocate()
-                Log.e("TAG", event.toString())
                 _viewState.postValue(HomeState.Loading)
             }
         }
@@ -38,9 +37,7 @@ class HomeViewModel @Inject constructor(private val repository: Repository, priv
         viewModelScope.launch {
             val gpsLocation = gps.location
             gpsLocation.collect { coordinates ->
-                delay(1000)
-                if (coordinates != null)
-                    getCurrentWeather(coordinates)
+                getCurrentWeather(coordinates)
             }
         }
     }

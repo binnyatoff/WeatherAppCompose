@@ -1,4 +1,4 @@
-package ru.binnyatoff.weatherappcompose.data
+package ru.binnyatoff.weatherappcompose.data.network
 
 import okhttp3.HttpUrl
 import okhttp3.Interceptor

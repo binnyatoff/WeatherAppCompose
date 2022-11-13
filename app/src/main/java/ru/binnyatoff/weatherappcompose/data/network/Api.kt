@@ -1,4 +1,4 @@
-package ru.binnyatoff.weatherappcompose.data
+package ru.binnyatoff.weatherappcompose.data.network
 
 import retrofit2.Response
 import retrofit2.http.GET

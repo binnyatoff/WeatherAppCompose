@@ -3,12 +3,10 @@ package ru.binnyatoff.weatherappcompose.ui.screens.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -16,7 +14,6 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import ru.binnyatoff.weatherappcompose.R
 import ru.binnyatoff.weatherappcompose.data.toWeatherIcon
-import ru.binnyatoff.weatherappcompose.ui.placeholderMain
 import ru.binnyatoff.weatherappcompose.ui.theme.AppTheme
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -28,7 +25,6 @@ fun WeatherScreen(
     humidity: Int = 0,
     windSpeed: Double = 0.0,
     location: String = "No Location",
-    currentTime: Int = 0,
     loading: Boolean = true
 ) {
     Card(
@@ -56,9 +52,17 @@ fun WeatherScreen(
                 modifier = Modifier.placeholderMain(loading)
             )
             Row(modifier = Modifier, verticalAlignment = Alignment.CenterVertically) {
-                TextWithIcon(icon = R.drawable.ic_humidity, text = "$humidity %", loading = loading)
+                TextWithIcon(
+                    icon = R.drawable.ic_humidity,
+                    text = "$humidity %",
+                    loading = loading,
+                    contentDescription = R.string.humidity
+                )
                 Spacer(modifier = Modifier.width(60.dp))
-                TextWithIcon(icon = R.drawable.ic_wind, text = "$windSpeed km/h", loading = loading)
+                TextWithIcon(
+                    icon = R.drawable.ic_wind, text = "$windSpeed km/h", loading = loading,
+                    contentDescription = R.string.wind
+                )
             }
 
         }

@@ -7,7 +7,7 @@ import ru.binnyatoff.weatherappcompose.R
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import ru.binnyatoff.weatherappcompose.ui.BottomViewItem
+import ru.binnyatoff.weatherappcompose.ui.screens.components.BottomViewItem
 import ru.binnyatoff.weatherappcompose.ui.theme.AppTheme
 
 enum class NavigationTree {

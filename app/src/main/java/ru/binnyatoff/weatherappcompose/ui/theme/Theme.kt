@@ -15,15 +15,15 @@ data class Colors(
 )
 
 private val LightColorPalette = Colors(
-    primary = Tulip,
-    secondary = Melon,
+    primary = BlizzardBlue,
+    secondary = Water,
     systemBarColor = Color.White,
     darkIcons = true
 )
 
 private val DarkColorPalette = Colors(
-    primary = Tulip,
-    secondary = Melon,
+    primary = YankeesBlue,
+    secondary = Charcoal,
     systemBarColor = Color.Black,
     darkIcons = false
 )

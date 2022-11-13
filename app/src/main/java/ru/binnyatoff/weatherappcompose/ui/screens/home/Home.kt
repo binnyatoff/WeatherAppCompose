@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import ru.binnyatoff.weatherappcompose.R
 import ru.binnyatoff.weatherappcompose.ui.screens.components.WeatherScreen
 import ru.binnyatoff.weatherappcompose.ui.theme.AppTheme
 
@@ -25,12 +27,12 @@ fun Home(viewModel: HomeViewModel) {
             shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 35.dp),
+                .padding(top = 15.dp),
             backgroundColor = AppTheme.colors.secondary
         ) {
             Text(
                 modifier = Modifier.padding(12.dp),
-                text = "Current Weather",
+                text = stringResource(id = R.string.currentWeather),
                 fontSize = 35.sp
             )
         }
@@ -41,7 +43,7 @@ fun Home(viewModel: HomeViewModel) {
             is HomeState.Empty -> HomeEmpty()
             is HomeState.Error -> HomeError(error = state.error)
             else -> {
-                HomeError(error = "ViewState Is Empty -_-")
+                HomeError(error = stringResource(id = R.string.viewStateEmpty))
             }
         }
     }
@@ -81,7 +83,7 @@ fun ValidatePermissions(viewModel: HomeViewModel) {
                 Button(onClick = {
                     locationPermissionsState.launchMultiplePermissionRequest()
                 }) {
-                    Text("Request permission")
+                    Text(stringResource(id = R.string.requestPermission))
                 }
             }
 
@@ -99,7 +101,6 @@ fun HomeLoaded(state: HomeState.Loaded) {
             humidity = humidity,
             windSpeed = windSpeed,
             location = location,
-            currentTime = currentTime,
             loading = false
         )
     }
@@ -118,5 +119,5 @@ fun HomeError(error: String) {
 
 @Composable
 fun HomeEmpty() {
-    Text(text = "Empty")
+    Text(text = stringResource(id = R.string.viewEmpty))
 }
