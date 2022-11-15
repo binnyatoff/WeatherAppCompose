@@ -65,7 +65,7 @@ fun DailyLoading() {
         temp = temp,
         icon = "04n"
     )
-    val list = listOf(dailyMap, dailyMap, dailyMap, dailyMap, dailyMap)
+    val list = List(7){dailyMap}
     DailyLoaded(list = list, loading = true)
 }
 

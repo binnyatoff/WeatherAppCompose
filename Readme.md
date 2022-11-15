@@ -16,12 +16,13 @@
 * Jetpack Compose Navigation
 * Glide for compose
 ### Структура проекта
-* Data
+* Data 
     * models - data классы преобразованные из классов DTO, для использования в приложении
     * modelsDTO - data классы получаемы при запросе в сеть
     * network - Api для запросов. Mapper - мапинг классов из DTO
+    * GPS, используется для поиска местоположения пользователя
 * DI - Зависимости 
-* UI - GPS(перенести в Data folder), используется для поиска местоположения пользователя
+* UI
     * navigation - Дерево навигаций и bottomNavigation
     * screens
         * components - Переиспользуемые компоненты экрана

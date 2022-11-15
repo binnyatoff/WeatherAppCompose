@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import ru.binnyatoff.weatherappcompose.data.models.Coordinates
 import javax.inject.Inject
 
-class GPS (private var appContext: Context) {
+class GPS(private var appContext: Context) {
 
     private val locationManager =
         appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -26,7 +26,11 @@ class GPS (private var appContext: Context) {
     private val hasGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     private val hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-    private val _location = MutableSharedFlow<Coordinates>(replay = 2, extraBufferCapacity = 2, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _location = MutableSharedFlow<Coordinates>(
+        replay = 1,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val location: SharedFlow<Coordinates> = _location.asSharedFlow()
 
     fun getLocate() {
@@ -48,12 +52,12 @@ class GPS (private var appContext: Context) {
             if (hasGps) {
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
-                    500000,
-                    1F
+                    600000,
+                    4F
                 ) { location ->
                     CoroutineScope(Dispatchers.IO).launch {
                         if (location != lastKnownLocationByGps) {
-                            compare(lastKnownLocationByGps, location)
+                            _location.emit(location.toCoordinates())
                         }
                     }
                 }
@@ -62,31 +66,15 @@ class GPS (private var appContext: Context) {
             if (hasNetwork) {
                 locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
-                    500000,
-                    1F
+                    600000,
+                    4F
                 ) { location ->
                     CoroutineScope(Dispatchers.IO).launch {
                         if (location != lastKnownLocationByNetwork) {
-                            compare(lastKnownLocationByGps, location)
+                            _location.emit(location.toCoordinates())
                         }
                     }
                 }
-            }
-        }
-    }
-
-    private suspend fun compare(oldLocation: Location?, newLocation: Location) {
-        val newCoordinates = Coordinates(
-            newLocation.latitude,
-            newLocation.longitude
-        )
-        if (oldLocation != null) {
-            val oldCoordinates = Coordinates(
-                oldLocation.latitude,
-                oldLocation.longitude
-            )
-            if (newCoordinates != oldCoordinates) {
-                _location.emit(newCoordinates)
             }
         }
     }

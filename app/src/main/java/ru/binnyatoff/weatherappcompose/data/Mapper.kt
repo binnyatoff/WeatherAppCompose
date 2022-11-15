@@ -1,6 +1,8 @@
 package ru.binnyatoff.weatherappcompose.data
 
 import android.annotation.SuppressLint
+import android.location.Location
+import ru.binnyatoff.weatherappcompose.data.models.Coordinates
 import ru.binnyatoff.weatherappcompose.data.models.CurrentWeather
 import ru.binnyatoff.weatherappcompose.data.modelsDTO.CurrentWeatherDTO
 import ru.binnyatoff.weatherappcompose.data.modelsDTO.Daily
@@ -18,6 +20,12 @@ fun Int.toDateTime(): String {
 fun String.toWeatherIcon():String{
     val id = this
     return "http://openweathermap.org/img/wn/${id}@2x.png"
+}
+
+
+fun Location.toCoordinates(): Coordinates {
+    val location = this
+    return Coordinates(location.latitude, location.longitude)
 }
 
 fun CurrentWeatherDTO.toCurrentWeather(): CurrentWeather {
