@@ -32,7 +32,6 @@ class DailyViewModel @Inject constructor(private val gps: GPS, private val repos
         viewModelScope.launch(Dispatchers.IO){
             val gpsLocation = gps.location
             gpsLocation.collect { coordinates ->
-                Log.e(HomeViewModel.TAG, coordinates.toString())
                 getDailyWeatherList(coordinates)
             }
         }
@@ -49,7 +48,6 @@ class DailyViewModel @Inject constructor(private val gps: GPS, private val repos
                         _viewState.postValue(
                             DailyState.Loaded(
                                 body.toDailyMap()
-
                             )
                         )
                     } else {
